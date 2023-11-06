@@ -1,6 +1,6 @@
 from subprocess import run
 
-from app.resources import Resources
+from .resources import Resources
 
 
 def ensure_dependencies():

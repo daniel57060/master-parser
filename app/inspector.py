@@ -1,5 +1,5 @@
-from app.syntax_node import SyntaxNode, mk_call_expression
-from app.variable import Variable
+from .syntax_node import SyntaxNode, mk_call_expression
+from .variable import Variable
 
 
 class Inspector:

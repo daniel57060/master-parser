@@ -1,6 +1,6 @@
 from tree_sitter import Node, Tree
 
-from app.syntax_node import SyntaxNode
+from .syntax_node import SyntaxNode
 
 no_collect_text = [
     "root", "translation_unit",

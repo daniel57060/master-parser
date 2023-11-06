@@ -1,7 +1,7 @@
-from app.inspector import Inspector
-from app.syntax_node import SyntaxNode
-from app.transform_on_next_semi import TransformOnNextSemi
-from app.walk_tree import ITransformer, WalkTree
+from .inspector import Inspector
+from .syntax_node import SyntaxNode
+from .transform_on_next_semi import TransformOnNextSemi
+from .walk_tree import ITransformer, WalkTree
 
 
 class TransformCallExpression(ITransformer):

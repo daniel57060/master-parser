@@ -1,6 +1,6 @@
-from app.inspector import Inspector
-from app.syntax_node import SyntaxNode, wrap_in_parenthesized_expression
-from app.walk_tree import ITransformer, WalkTree
+from .inspector import Inspector
+from .syntax_node import SyntaxNode, wrap_in_parenthesized_expression
+from .walk_tree import ITransformer, WalkTree
 
 
 class TransformConditions(ITransformer):

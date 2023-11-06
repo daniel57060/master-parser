@@ -1,9 +1,9 @@
+import argparse
 from typing import Any
-from app.parse_and_transform_file import ParserAndTransformFile
-from app.dependencies import ensure_dependencies
 from pathlib import Path
 
-import argparse
+from .parse_and_transform_file import ParserAndTransformFile
+from .dependencies import ensure_dependencies
 
 
 class Cli:

@@ -1,5 +1,5 @@
-from app.syntax_node import SyntaxNode, compound_statement_into_do_while, mk_compound_statement, wrap_in_parenthesized_expression
-from app.walk_tree import ITransformer, WalkTree
+from .syntax_node import SyntaxNode, compound_statement_into_do_while, mk_compound_statement, wrap_in_parenthesized_expression
+from .walk_tree import ITransformer, WalkTree
 
 
 class TransformForIntoWhile(ITransformer):

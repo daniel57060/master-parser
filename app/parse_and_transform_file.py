@@ -1,12 +1,14 @@
 from dataclasses import dataclass
 import json
 from pathlib import Path
-from app.resources import Resources
 from typing import Optional
-from app.convert_json_to_str import convert_json_to_str
-from app.convert_tree_to_json import convert_tree_to_json
-from app.transform_syntax_tree import transform_syntax_tree
+
 from languages import c_parser
+
+from .resources import Resources
+from .convert_json_to_str import convert_json_to_str
+from .convert_tree_to_json import convert_tree_to_json
+from .transform_syntax_tree import transform_syntax_tree
 
 LOG = False
 

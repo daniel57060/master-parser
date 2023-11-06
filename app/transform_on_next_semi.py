@@ -1,6 +1,6 @@
 
-from app.syntax_node import SyntaxNode
-from app.walk_tree import ITransformer, WalkTree
+from .syntax_node import SyntaxNode
+from .walk_tree import ITransformer, WalkTree
 
 
 class TransformOnNextSemi(ITransformer):

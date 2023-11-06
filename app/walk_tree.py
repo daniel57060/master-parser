@@ -1,4 +1,5 @@
-from app.syntax_node import SyntaxNode
+from .syntax_node import SyntaxNode
+
 from collections import deque
 
 
