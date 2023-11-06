@@ -1,0 +1,12 @@
+from app.syntax_node import SyntaxNode
+from app.walk_tree import WalkTree
+
+
+class TransformAddInspectorHeaders:
+    def transform(self, ctx: WalkTree, node: SyntaxNode):
+        if node.type == 'root':
+            node.children = [
+                SyntaxNode.literal('#define INSPECTOR_IMPLEMENTATION\n'),
+                SyntaxNode.literal('#include <inspector.h>\n'),
+                *node.children,
+            ]
