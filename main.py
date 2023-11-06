@@ -15,6 +15,7 @@ from app.transform_variable_declare import TransformVariableDeclare
 from app.transform_update_expression import TransformUpdateExpression
 from app.transform_conditions import TransformConditions
 from app.transform_variable_assignment import TransformVariableAssignment
+from app.transform_function_enter_exit import TransformFunctionEnterExit
 
 
 def process_sample(sample_name: str, sample_bytes: Optional[bytes] = None):
@@ -35,6 +36,7 @@ def process_sample(sample_name: str, sample_bytes: Optional[bytes] = None):
     ctx.add_transformer(TransformVariableDeclare())
     ctx.add_transformer(TransformUpdateExpression())
     ctx.add_transformer(TransformConditions())
+    ctx.add_transformer(TransformFunctionEnterExit())
     ctx.walk(json_result)
 
     with Resources.get_output(sample_name.replace('.c', '.json')).open('w') as f:

@@ -10,7 +10,6 @@ class ITransformer:
 class WalkTree:
     def __init__(self) -> None:
         self.function = None
-        self.next_function = None
         self.parents = []
         self.transformers = []
 
@@ -27,10 +26,17 @@ class WalkTree:
     def scope(self):
         return self.scopes[-1]
 
+    def function_enter(self):
+        return len(self.parents) == 4 and self.parents[2].type == 'function_definition'
+
+    def function_exit(self):
+        return len(self.parents) == 4
+
     def _look(self, node: SyntaxNode, parents: SyntaxNode):
         self.parents = parents
+
         if node.type == '{':
-            if len(self.parents) == 4 and self.parents[2].type == 'function_definition':
+            if self.function_enter():
                 assert self.parents[3].type == 'compound_statement'
                 function_name = self.parents[2].get(1, 'function_declarator')
                 function_name = function_name.get(0, 'identifier')
@@ -39,14 +45,14 @@ class WalkTree:
             self.parentesis_count += 1
             self.scopes.append(
                 f'{self.function or "global()"}:{self.scope_count}')
-        elif node.type == '}':
-            self.parentesis_count -= 1
-            if self.parentesis_count == 0:
-                self.function = None
 
         for transformer in self.transformers:
             transformer.transform(self, node)
-        self.parents = []
+
+        if node.type == '}':
+            self.parentesis_count -= 1
+            if self.parentesis_count == 0:
+                self.function = None
 
     def ignore(self, child: SyntaxNode):
         return any([
