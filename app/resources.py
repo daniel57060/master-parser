@@ -10,6 +10,8 @@ class Resources:
     BUILD = ROOT / "build"
     OUTPUTS = BUILD / "outputs"
 
+    VENDOR = ROOT / "vendor"
+
     @staticmethod
     def get_sample(name: str):
         return Resources.SAMPLES / name

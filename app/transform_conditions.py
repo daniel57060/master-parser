@@ -1,9 +1,9 @@
 from app.inspector import Inspector
 from app.syntax_node import SyntaxNode, wrap_in_parenthesized_expression
-from app.walk_tree import WalkTree
+from app.walk_tree import ITransformer, WalkTree
 
 
-class TransformConditions:
+class TransformConditions(ITransformer):
     def transform(self, ctx: WalkTree, node: SyntaxNode):
         if node.type == 'if_statement':
             self._change_expression('if', ctx, node, 1)

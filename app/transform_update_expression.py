@@ -1,9 +1,9 @@
 from app.inspector import Inspector
 from app.syntax_node import SyntaxNode
-from app.walk_tree import WalkTree
+from app.walk_tree import ITransformer, WalkTree
 
 
-class TransformUpdateExpression:
+class TransformUpdateExpression(ITransformer):
     def transform(self, ctx: WalkTree, node: SyntaxNode):
         if not ctx.is_global():
             if node.type == 'update_expression':

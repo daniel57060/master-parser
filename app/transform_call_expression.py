@@ -1,10 +1,10 @@
 from app.inspector import Inspector
 from app.syntax_node import SyntaxNode
 from app.transform_on_next_semi import TransformOnNextSemi
-from app.walk_tree import WalkTree
+from app.walk_tree import ITransformer, WalkTree
 
 
-class TransformCallExpression:
+class TransformCallExpression(ITransformer):
     def __init__(self) -> None:
         self.next = TransformOnNextSemi()
 

@@ -22,17 +22,18 @@ class WriteableStr(IWritable):
 
 
 class G:
-    WRITE_TYPE = {'++', '--', '&', '[', ']', '(', ')', '{', '}', ';', ',', '->', '==', '!=',
-                  '>', '<', '>=', '<=', '+', '-', '*', '/', '%', '!', '&&', '||', '=', '+=',
-                  '-=', '*=', '/=', '%=', '<<', '>>', '&=', '|=', '^=', '<<=', '>>=', '~',
-                  '^', '|', '?', ':', '...', 'sizeof', 'for', 'while', 'do', 'if', 'else',
-                  'goto', 'return', '#define', '#include', 'typedef', 'struct', 'union',
-                  'enum', 'break', 'continue', 'switch', 'case', 'default', 'extern', }
-    WRITE_TEXT = {
+    WRITE_TYPE = [
+        '++', '--', '&', '[', ']', '(', ')', '{', '}', ';', ',', '->', '==', '!=',
+        '>', '<', '>=', '<=', '+', '-', '*', '/', '%', '!', '&&', '||', '=', '+=',
+        '-=', '*=', '/=', '%=', '<<', '>>', '&=', '|=', '^=', '<<=', '>>=', '~',
+        '^', '|', '?', ':', '...', 'sizeof', 'for', 'while', 'do', 'if', 'else',
+        'goto', 'return', '#define', '#include', 'typedef', 'struct', 'union',
+        'enum', 'break', 'continue', 'switch', 'case', 'default', 'extern']
+    WRITE_TEXT = [
         '__lit__',
         'number_literal', 'string_literal', 'identifier', 'type_identifier',
-        'statement_identifier', 'primitive_type', 'system_lib_string', 'preproc_arg'}
-    GENERATE_CHILDREN = {
+        'statement_identifier', 'primitive_type', 'system_lib_string', 'preproc_arg']
+    GENERATE_CHILDREN = [
         '__sequence__',
         # root
         'root', 'translation_unit',
@@ -53,7 +54,7 @@ class G:
         # expression
         'assignment_expression', 'parenthesized_expression', 'binary_expression', 'unary_expression',
         'call_expression', 'argument_list', 'conditional_expression', 'pointer_expression',
-        'comma_expression', 'update_expression'}
+        'comma_expression', 'update_expression']
     NO_SPACE_AFTER = {*GENERATE_CHILDREN, '++', '--', '&', '__lit__'}
     NEWLINE_AFTER = {'preproc_include', 'preproc_def'}
 

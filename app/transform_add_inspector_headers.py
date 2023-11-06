@@ -1,8 +1,8 @@
 from app.syntax_node import SyntaxNode
-from app.walk_tree import WalkTree
+from app.walk_tree import ITransformer, WalkTree
 
 
-class TransformAddInspectorHeaders:
+class TransformAddInspectorHeaders(ITransformer):
     def transform(self, ctx: WalkTree, node: SyntaxNode):
         if node.type == 'root':
             node.children = [

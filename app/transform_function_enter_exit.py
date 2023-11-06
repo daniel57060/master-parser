@@ -1,9 +1,9 @@
 from app.inspector import Inspector
 from app.syntax_node import SyntaxNode
-from app.walk_tree import WalkTree
+from app.walk_tree import ITransformer, WalkTree
 
 
-class TransformFunctionEnterExit:
+class TransformFunctionEnterExit(ITransformer):
     def transform(self, ctx: WalkTree, node: SyntaxNode):
         if node.type == '{' and ctx.function_enter():
             self._transform_enter(ctx, node)

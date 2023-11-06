@@ -13,9 +13,11 @@ no_collect_text = [
 
     "call_expression",
 ]
-collect_text = ["system_lib_string", "primitive_type", "identifier",
-                "number_literal", "string_literal", "character_literal",
-                "type_identifier", "comment", "statement_identifier", "preproc_arg"]
+collect_text = [
+    "system_lib_string", "primitive_type", "identifier",
+    "number_literal", "string_literal", "character_literal",
+    "type_identifier", "comment", "statement_identifier", "preproc_arg"
+]
 
 
 def json_from_node(node: Node):

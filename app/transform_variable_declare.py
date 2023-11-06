@@ -2,10 +2,10 @@ from app.inspector import Inspector
 from app.syntax_node import SyntaxNode
 from app.transform_on_next_semi import TransformOnNextSemi
 from app.variable import Variable
-from app.walk_tree import WalkTree
+from app.walk_tree import ITransformer, WalkTree
 
 
-class TransformVariableDeclare:
+class TransformVariableDeclare(ITransformer):
     def __init__(self) -> None:
         self.ctx = None
         self.variables = {}

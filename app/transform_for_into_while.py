@@ -1,8 +1,8 @@
 from app.syntax_node import SyntaxNode, compound_statement_into_do_while, mk_compound_statement, wrap_in_parenthesized_expression
-from app.walk_tree import WalkTree
+from app.walk_tree import ITransformer, WalkTree
 
 
-class TransformForIntoWhile:
+class TransformForIntoWhile(ITransformer):
     def transform(self, ctx: WalkTree, node: SyntaxNode):
         if node.type == 'for_statement':
             self._change_for_statement(node)

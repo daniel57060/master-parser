@@ -1,10 +1,9 @@
 
-from app.inspector import Inspector
 from app.syntax_node import SyntaxNode
-from app.walk_tree import WalkTree
+from app.walk_tree import ITransformer, WalkTree
 
 
-class TransformOnNextSemi:
+class TransformOnNextSemi(ITransformer):
     def __init__(self) -> None:
         self.nodes = []
 
