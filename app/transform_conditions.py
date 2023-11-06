@@ -18,7 +18,7 @@ class TransformConditions:
             if value.type == 'number_literal' and value.text == '0':
                 process = False
             if process:
-                self._change_expression(ctx, node, 3)
+                self._change_expression('do', ctx, node, 3)
 
     def _change_expression(self, cause: str, ctx: WalkTree, node: SyntaxNode, index: int):
         node.get(0, cause)

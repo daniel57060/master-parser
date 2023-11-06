@@ -16,6 +16,7 @@ from app.transform_update_expression import TransformUpdateExpression
 from app.transform_conditions import TransformConditions
 from app.transform_variable_assignment import TransformVariableAssignment
 from app.transform_function_enter_exit import TransformFunctionEnterExit
+from app.transform_call_expression import TransformCallExpression
 
 
 def process_sample(sample_name: str, sample_bytes: Optional[bytes] = None):
@@ -33,6 +34,7 @@ def process_sample(sample_name: str, sample_bytes: Optional[bytes] = None):
     ctx.add_transformer(TransformFunctionIntoInspector())
     ctx.add_transformer(TransformForIntoWhile())
     ctx.add_transformer(TransformVariableAssignment())
+    ctx.add_transformer(TransformCallExpression())
     ctx.add_transformer(TransformVariableDeclare())
     ctx.add_transformer(TransformUpdateExpression())
     ctx.add_transformer(TransformConditions())
@@ -48,29 +50,29 @@ def process_sample(sample_name: str, sample_bytes: Optional[bytes] = None):
 
 
 # fmt: off
-# process_sample("empty.c")
-# process_sample("only-fork-1.c")
-# process_sample("only-fork-2.c")
-# process_sample("only-fork-3.c")
-# process_sample("program1.2.c")
-# process_sample("program1.3.c")
-# process_sample("program1.4.c")
-# process_sample("program1.5.c")
-# process_sample("program1.6.c")
-# process_sample("program1.7.c")
-# process_sample("program1.8.c")
-# process_sample("program1.9.c")
-# process_sample("program1.10.c")
-# process_sample("program1.11.1.c")
-# process_sample("program1.11.2.c")
-# process_sample("program1.12.1.c")
-# process_sample("program1.12.2.c")
-# process_sample("program1.13.1.c")
-# process_sample("program1.13.2.c")
-# process_sample("program1.13.3.c")
-# process_sample("program1.14.c")
-# process_sample("for.c", (Resources.RESOURCES / "others" / "for.c").read_bytes())
+process_sample("empty.c")
+process_sample("only-fork-1.c")
+process_sample("only-fork-2.c")
+process_sample("only-fork-3.c")
+process_sample("program1.2.c")
+process_sample("program1.3.c")
+process_sample("program1.4.c")
+process_sample("program1.5.c")
+process_sample("program1.6.c")
+process_sample("program1.7.c")
+process_sample("program1.8.c")
+process_sample("program1.9.c")
+process_sample("program1.10.c")
+process_sample("program1.11.1.c")
+process_sample("program1.11.2.c")
+process_sample("program1.12.1.c")
+process_sample("program1.12.2.c")
+process_sample("program1.13.1.c")
+process_sample("program1.13.2.c")
+process_sample("program1.13.3.c")
+process_sample("program1.14.c")
+process_sample("for.c", (Resources.RESOURCES / "others" / "for.c").read_bytes())
 process_sample("enter_exit.c", (Resources.RESOURCES / "others" / "enter_exit.c").read_bytes())
-# process_sample("features.c", (Resources.RESOURCES / "others" / "features.c").read_bytes())
-# process_sample("inspectors.c", (Resources.RESOURCES / "others" / "inspectors.c").read_bytes())
+process_sample("features.c", (Resources.RESOURCES / "others" / "features.c").read_bytes())
+process_sample("inspectors.c", (Resources.RESOURCES / "others" / "inspectors.c").read_bytes())
 # fmt: on

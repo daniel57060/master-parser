@@ -5,4 +5,6 @@ int sum()
 
 void main()
 {
+    int x = sum();
+    sum();
 }

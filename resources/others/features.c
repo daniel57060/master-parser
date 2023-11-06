@@ -33,6 +33,9 @@ int main()
     x = 5 << 2;  // Left shift
     y = 20 >> 2; // Right shift
 
+    // Calling functions
+    int k = sum(x, y);
+
     // Logical operators
     if (x > 0 && y < 10)
     {
@@ -122,4 +125,9 @@ start:
     }
 
     return 0;
+}
+
+int sum(int a, int b)
+{
+    return a + b;
 }

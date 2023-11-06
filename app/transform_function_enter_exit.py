@@ -11,12 +11,14 @@ class TransformFunctionEnterExit:
             self._transform_exit(ctx, node)
 
     def _transform_enter(self, ctx: WalkTree, node: SyntaxNode):
+        parent = ctx.parents[2]
+        parent = parent.find('function_declarator')
+        parent = parent.get(0, 'identifier')
         node.type = '__sequence__'
         node.text = None
         node.children = [
             SyntaxNode.mk('{'),
-            Inspector.function_enter(
-                node.line, node.column, ctx.function),
+            Inspector.function_enter(parent.line, parent.column, ctx.function),
             SyntaxNode.mk(';'),
         ]
 

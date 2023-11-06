@@ -1,5 +1,6 @@
 from app.inspector import Inspector
 from app.syntax_node import SyntaxNode
+from app.transform_on_next_semi import TransformOnNextSemi
 from app.variable import Variable
 from app.walk_tree import WalkTree
 
@@ -8,6 +9,7 @@ class TransformVariableDeclare:
     def __init__(self) -> None:
         self.ctx = None
         self.variables = {}
+        self.next = TransformOnNextSemi()
 
     def init(self, ctx: WalkTree):
         ctx.variables = self
@@ -25,7 +27,7 @@ class TransformVariableDeclare:
     def transform(self, ctx: WalkTree, node: SyntaxNode):
         if not ctx.is_global():
             if node.type == 'declaration':
-                variable_type = node.get(0, 'primitive_type')
+                variable_type = node.children[0]
 
                 vs: list[Variable] = []
                 for it in node.children:
@@ -47,6 +49,7 @@ class TransformVariableDeclare:
                     if node.children[-1].type != ';':
                         node.children.append(SyntaxNode.mk(';'))
 
-                    node.children.append(
+                    self.next.nodes.append(
                         Inspector.variable_declare(node.line, node.column, ctx.function, v))
-                    node.children.append(SyntaxNode.mk(';'))
+                    self.next.nodes.append(SyntaxNode.mk(';'))
+        self.next.transform(ctx, node)
