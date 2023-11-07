@@ -3,7 +3,6 @@ from typing import Any
 from pathlib import Path
 
 from .parse_and_transform_file import ParserAndTransformFile
-from .dependencies import ensure_dependencies
 
 
 class Cli:
@@ -42,7 +41,14 @@ class Cli:
 
     @staticmethod
     def run():
-        ensure_dependencies()
         parser = Cli.get_argument_parser()
         args = parser.parse_args()
         Cli.execute(args)
+
+
+def main():
+    Cli.run()
+
+
+if __name__ == '__main__':
+    main()

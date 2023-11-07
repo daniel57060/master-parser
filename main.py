@@ -1,9 +1,9 @@
 from pathlib import Path
 from typing import Optional
 
-from app.resources import Resources
+from c_inspectors.resources import Resources
 
-from app.parse_and_transform_file import ParserAndTransformFile
+from c_inspectors.parse_and_transform_file import ParserAndTransformFile
 
 
 def process_sample(sample_name: str, input_path: Optional[Path] = None):

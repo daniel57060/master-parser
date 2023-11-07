@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 class Resources:
-    ROOT = Path(__file__).parent.parent
+    ROOT = Path(__file__).parent
 
     RESOURCES = ROOT / "resources"
     SAMPLES = RESOURCES / "samples"
@@ -21,4 +21,11 @@ class Resources:
         return Resources.OUTPUTS / name
 
 
-Resources.OUTPUTS.mkdir(parents=True, exist_ok=True)
+dirs = [
+    Resources.OUTPUTS,
+    Resources.BUILD,
+    Resources.VENDOR
+]
+
+for it in dirs:
+    it.mkdir(parents=True, exist_ok=True)
