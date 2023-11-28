@@ -26,19 +26,44 @@ class G:
         '++', '--', '&', '[', ']', '(', ')', '{', '}', ';', ',', '->', '==', '!=',
         '>', '<', '>=', '<=', '+', '-', '*', '/', '%', '!', '&&', '||', '=', '+=',
         '-=', '*=', '/=', '%=', '<<', '>>', '&=', '|=', '^=', '<<=', '>>=', '~',
-        '^', '|', '?', ':', '...', 'sizeof', 'for', 'while', 'do', 'if', 'else',
-        'goto', 'return', '#define', '#include', 'typedef', 'struct', 'union',
-        'enum', 'break', 'continue', 'switch', 'case', 'default', 'extern']
+        '^', '|', '?', ':', '...', '\n', '.',
+        '#define', '#include', '#if', '#ifdef', '#ifndef', '#endif',
+        'typedef', 'sizeof', 
+        'struct', 'union', 'enum',
+        'for', 'while', 'do', 'if', 'else', 'goto', 'return', 
+        'break', 'continue',
+        'switch', 'case', 'default',
+        'extern', 'static', 'auto', 'register', 'const', 'volatile',
+        'unsigned']
     WRITE_TEXT = [
         '__lit__',
-        'number_literal', 'string_literal', 'identifier', 'type_identifier',
+        'number_literal', 'string_literal', 'char_literal', 'identifier', 'type_identifier', 'field_identifier',
         'statement_identifier', 'primitive_type', 'system_lib_string', 'preproc_arg']
     GENERATE_CHILDREN = [
         '__sequence__',
+        'storage_class_specifier',
+        'sized_type_specifier',
+        'compound_literal_expression',
+        # struct
+        'struct_specifier',
+        'field_declaration_list',
+        'field_declaration',
+        'field_designator',
+        'field_expression',
+        'bitfield_clause',
         # root
         'root', 'translation_unit',
         # preproc
         'preproc_include',  'preproc_def',
+        'preproc_if', 'preproc_ifdef', 'preproc_ifndef', 'preproc_endif',
+        # type
+        'type_descriptor', 'type_qualifier',
+        # initializer
+        'initializer_list', 'initializer_pair', 'subscript_designator',
+        # abstract
+        'abstract_pointer_declarator', 'abstract_array_declarator', 'abstract_parenthesized_declarator',
+        # enum
+        'enum_specifier', 'enumerator_list', 'enumerator',
         # function
         'function_definition',
         'function_declarator',
@@ -47,6 +72,7 @@ class G:
         # declaration
         'declaration', 'array_declarator',
         'init_declarator',
+        'pointer_declarator',
         # statement
         'compound_statement', 'break_statement', 'expression_statement', 'if_statement', 'else_clause',
         'for_statement', 'while_statement', 'do_statement', 'goto_statement', 'return_statement',
@@ -54,9 +80,11 @@ class G:
         # expression
         'assignment_expression', 'parenthesized_expression', 'binary_expression', 'unary_expression',
         'call_expression', 'argument_list', 'conditional_expression', 'pointer_expression',
-        'comma_expression', 'update_expression']
-    NO_SPACE_AFTER = {*GENERATE_CHILDREN, '++', '--', '&', '__lit__'}
-    NEWLINE_AFTER = {'preproc_include', 'preproc_def'}
+        'comma_expression', 'update_expression', 'subscript_expression', 'sizeof_expression',
+        'cast_expression',
+    ]
+    NO_SPACE_AFTER = {*GENERATE_CHILDREN, '++', '--', '&', '__lit__', '\n'}
+    NEWLINE_AFTER = {'preproc_include', 'preproc_def', 'preproc_ifdef', 'preproc_ifndef', 'preproc_endif'}
 
     def __init__(self, writer: IWritable):
         self.writer = writer

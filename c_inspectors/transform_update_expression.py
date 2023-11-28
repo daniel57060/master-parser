@@ -9,7 +9,10 @@ class TransformUpdateExpression(ITransformer):
             if node.type == 'update_expression':
                 assert len(node.children) == 2
                 identifier = node.find('identifier')
-                v = ctx.variables.get_variable(identifier.text)
+                v = ctx.variables.get_variable(identifier.text, fail=False)
+                if v is None:
+                    # TODO(#4): ..\resources\cpp-cheat\c\compound_literal.c
+                    return
 
                 node.children = [
                     SyntaxNode.mk('('),

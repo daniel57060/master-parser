@@ -15,14 +15,16 @@ class TransformVariableDeclare(ITransformer):
         ctx.variables = self
         self.ctx = ctx
 
-    def get_variable(self, name: str) -> Variable:
+    def get_variable(self, name: str, *, fail=True) -> Variable:
         for scope in reversed(self.ctx.scopes):
             v_name = f'{scope}:{name}'
             v = self.variables.get(v_name)
             if v is not None:
                 return v
+        if not fail:
+            return None
         print(self.variables)
-        raise Exception(f'Variable {name} not found')
+        raise Exception(f'Variable "{name}" not found')
 
     def transform(self, ctx: WalkTree, node: SyntaxNode):
         if not ctx.is_global():
@@ -35,6 +37,9 @@ class TransformVariableDeclare(ITransformer):
                     if it.type == 'identifier':
                         variable_name = it
                     elif it.type == 'init_declarator':
+                        if it.children[0].type in ['subscript_expression', 'array_declarator', 'pointer_declarator']:
+                            # TODO(#0)
+                            continue
                         variable_name = it.get(0, 'identifier')
 
                     if variable_name is not None:

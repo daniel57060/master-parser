@@ -39,7 +39,7 @@ class WalkTree:
         if node.type == '{':
             if self.function_enter():
                 assert self.parents[3].type == 'compound_statement'
-                function_name = self.parents[2].get(1, 'function_declarator')
+                function_name = self.parents[2].find('function_declarator')
                 function_name = function_name.get(0, 'identifier')
                 self.function = function_name.text
             self.scope_count += 1

@@ -78,10 +78,15 @@ class SyntaxNode:
 
         return self.children[index]
 
-    def find(self, child_type: str):
+    def find(self, child_type: str, *, fail=True):
         for child in self.children:
             if child.type == child_type:
                 return child
+            node = child.find(child_type, fail=False)
+            if node is not None:
+                return node
+        if not fail:
+            return None
         raise Exception(f"Expected {child_type}, got nothing")
 
     def children_types(self):

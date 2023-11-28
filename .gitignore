@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 c_inspectors/vendor/tree-sitter-c
+resources/outputs
