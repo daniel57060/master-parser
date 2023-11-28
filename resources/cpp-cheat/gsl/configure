@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+sudo apt-get update
+sudo apt-get install \
+  libgsl0-dev \
+  libplplot-dev \
+  plplot-driver-xwin \
+;

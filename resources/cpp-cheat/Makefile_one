@@ -1,0 +1,32 @@
+-include $(shell git rev-parse --show-toplevel)/Makefile_params
+-include Makefile_params
+
+OUTS = $(OUT_DIR)/main$(OUT_EXT)
+ifneq ($(strip $(CXX_INS)),)
+LD = $(CXX)
+LDFLAGS = $(CXXFLAGS)
+LDLIBS = $(LIBS)
+else
+ifneq ($(strip $(CC_INS)),)
+LD = $(CC)
+LDFLAGS = $(CFLAGS)
+LDLIBS = $(LIBS)
+endif
+endif
+
+all: mkdir $(OUTS)
+
+$(OUTS): $(OBJS)
+	$(LD) $(LDFLAGS) -o '$@' $^ $(LDLIBS)
+
+$(OUT_DIR)%$(OBJ_EXT): $(IN_DIR)%$(CC_EXT) $(ALL_DEPEND)
+	$(CC) -c $(CFLAGS) -o '$@' '$<' $(LIBS)
+
+$(OUT_DIR)%$(OBJ_EXT): $(IN_DIR)%$(CXX_EXT) $(ALL_DEPEND)
+	$(CXX) -c $(CXXFLAGS) -o '$@' '$<' $(LIBS)
+
+$(OUT_DIR)%$(OBJ_EXT): $(IN_DIR)%$(FF_EXT) $(ALL_DEPEND)
+	$(FF) -c $(FFLAGS) -o '$@' '$<' $(FFLIBS)
+
+-include $(shell git rev-parse --show-toplevel)/Makefile_targets
+-include Makefile_targets

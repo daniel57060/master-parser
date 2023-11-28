@@ -1,0 +1,2 @@
+CC_STD = gnu11
+PEDANTIC =

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+./clean-build
+rm -f *.log

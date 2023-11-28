@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -eu
+scons
+! scons std=c89

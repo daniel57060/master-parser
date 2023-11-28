@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+set -eu
+
+# CLI args.
+
+# Each of those files contains n_ints_per_file ints.
+n_int_files="${1:-10}"
+n_ints_per_file="${2:-10}"
+
+# Each function adds all ints from all files.
+# This leads to n_int_files x n_ints_per_file x n_funcs relocations.
+n_funcs="${3:-10}"
+
+# Do a debug build, since it is for debug builds that link time matters the most,
+# as the user will be recompiling often.
+cflags='-ggdb3 -O0 -std=c99 -Wall -Wextra -pedantic'
+
+# Cleanup previous generated files objects.
+./clean-build
+
+echo "Generate i_*.c, ints.h and int_sum.h"
+rm -f ints.h
+echo 'return' > int_sum.h
+int_file_i=0
+while [ "$int_file_i" -lt "$n_int_files" ]; do
+  int_i=0
+  int_file="${int_file_i}.c"
+  rm -f "$int_file"
+  while [ "$int_i" -lt "$n_ints_per_file" ]; do
+    int_sym="i_${int_file_i}_${int_i}"
+    echo "unsigned int ${int_sym} = ${int_file_i};" >> "$int_file"
+    echo "extern unsigned int ${int_sym};" >> ints.h
+    echo "${int_sym} +" >> int_sum.h
+    int_i=$((int_i + 1))
+  done
+  int_file_i=$((int_file_i + 1))
+done
+echo '1;' >> int_sum.h
+
+echo "Generate funcs.h and main.c."
+rm -f funcs.h
+cat <<EOF >main.c
+#include "funcs.h"
+
+int main(void) {
+return
+EOF
+i=0
+while [ "$i" -lt "$n_funcs" ]; do
+  func_sym="f_${i}"
+  echo "${func_sym}() +" >> main.c
+  echo "int ${func_sym}(void);" >> funcs.h
+  cat <<EOF >"${func_sym}.c"
+#include "ints.h"
+
+int ${func_sym}(void) {
+#include "int_sum.h"
+}
+EOF
+  i=$((i + 1))
+done
+cat <<EOF >>main.c
+1;
+}
+EOF
+
+echo "Generate *.o"
+ls | grep -E '\.c$' | parallel --halt now,fail=1 --will-cite "gcc $cflags -c -o '{.}.o' '{}'"

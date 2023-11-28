@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -eu
+f="${1%.*}"
+g="${f}.gdb"
+if [ -f "$g" ]; then
+  gdbcmd="-batch -x $g"
+else
+  gdbcmd=
+fi
+gdb -nh -q $gdbcmd "${f}.out"
