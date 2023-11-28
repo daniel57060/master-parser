@@ -4,7 +4,7 @@ from pathlib import Path
 class Resources:
     ROOT = Path(__file__).parent
 
-    RESOURCES = ROOT / "resources"
+    RESOURCES = ROOT / ".." / "resources"
     SAMPLES = RESOURCES / "samples"
 
     BUILD = ROOT / "build"
