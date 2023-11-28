@@ -13,5 +13,3 @@ def ensure_dependencies():
         if not path_name.exists():
             print(f'Cloning {url}...')
             run(['git', 'clone', '--depth=1', url, str(path_name)], check=True)
-        else:
-            print(f'Already cloned\nUrl: {url}\nPath: {path_name}')

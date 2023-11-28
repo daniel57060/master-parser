@@ -36,6 +36,12 @@ def parse_and_transform_file(args: ParserAndTransformFile):
     content = args.input_path.read_bytes()
     tree = parser.parse(content)
     json_result = convert_tree_to_json(tree)
+    
+    if args.json_path is not None:
+        log(f'INFO: Saving json to "{simple_path(args.json_path)}"')
+        with args.json_path.open('w') as f:
+            json.dump(json_result.to_dict(), f, indent=2)
+
     transform_syntax_tree(json_result)
 
     if args.json_path is not None:
