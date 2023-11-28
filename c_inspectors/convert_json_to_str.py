@@ -60,31 +60,52 @@ class G:
 
     def __init__(self, writer: IWritable):
         self.writer = writer
+        self.identation = 0
 
     def _unimplemented(self, node: SyntaxNode):
         print(node)
         print([it.type for it in node.children])
         raise NotImplementedError(f"Unimplemented: {repr(node.type)}")
 
-    def _generate_children(self, node: SyntaxNode, ident=0):
+    def _generate_children(self, node: SyntaxNode):
         for child in node.children:
-            self.generate(child, ident)
+            self.generate(child)
 
-    def _write_ident(self, ident: int):
-        self.writer.write('  ' * ident)
+    def _write_identation(self):
+        if self.identation > 0:
+            self.writer.write('  ' * self.identation)
 
-    def _before_node(self, node: SyntaxNode, ident: int):
-        pass
+    def _before_node(self, node: SyntaxNode):
+        if node.type == '{':
+            self.writer.write('\n')
+            self._write_identation()
+            self.identation += 1
+        if node.type == '}':
+            self.writer.write('\n')
+            self.identation -= 1
+            self._write_identation()
 
-    def _after_node(self, node: SyntaxNode, ident: int):
+    def _after_node(self, node: SyntaxNode):
         if node.type not in G.NO_SPACE_AFTER:
             self.writer.write(' ')
 
         if node.type in G.NEWLINE_AFTER:
             self.writer.write('\n')
 
-    def generate(self, node: SyntaxNode, ident=0) -> str:
-        self._before_node(node, ident)
+        if node.type == '{':
+            # self.identation += 1
+            self.writer.write('\n')
+            self._write_identation()
+        if node.type == '}':
+            # self.identation -= 1
+            self.writer.write('\n')
+            self._write_identation()
+        if node.type == ';':
+            self.writer.write('\n')
+            self._write_identation()
+
+    def generate(self, node: SyntaxNode) -> str:
+        self._before_node(node)
 
         if node.type in G.WRITE_TEXT:
             if node.text is None:
@@ -95,7 +116,7 @@ class G:
                 self._unimplemented(node)
             self.writer.write(node.type)
         elif node.type in G.GENERATE_CHILDREN:
-            self._generate_children(node, ident)
+            self._generate_children(node)
         elif node.type == 'comment':
             pass
         elif node.type == 'null':
@@ -103,7 +124,7 @@ class G:
         else:
             self._unimplemented(node)
 
-        self._after_node(node, ident)
+        self._after_node(node)
 
 
 def convert_json_to_str(root: SyntaxNode) -> str:
