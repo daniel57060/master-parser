@@ -27,5 +27,5 @@ class TransformConditions(ITransformer):
         parenthesized_expression.text = parenthesized_expression.text[1:-1]
         parenthesized_expression = Inspector.condition(
             node.line, node.column, ctx.function, cause, parenthesized_expression)
-        node.children[1] = wrap_in_parenthesized_expression(
+        node.children[index] = wrap_in_parenthesized_expression(
             parenthesized_expression)

@@ -48,7 +48,7 @@ class G:
         'declaration', 'array_declarator',
         'init_declarator',
         # statement
-        'compound_statement', 'break_statement', 'expression_statement', 'if_statement',
+        'compound_statement', 'break_statement', 'expression_statement', 'if_statement', 'else_clause',
         'for_statement', 'while_statement', 'do_statement', 'goto_statement', 'return_statement',
         'labeled_statement', 'continue_statement', 'switch_statement', 'case_statement',
         # expression
