@@ -1,8 +1,5 @@
 from tree_sitter import Language, Parser
 from .resources import Resources
-from .dependencies import ensure_dependencies
-
-ensure_dependencies()
 
 MY_LANGUAGUES_PATH = str(Resources.BUILD / 'my-languages.so')
 
